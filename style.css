@@ -71,3 +71,35 @@ button {
     font-family: sans-serif;
     z-index: 10;
 }
+
+/* Prevent image dragging */
+img, video {
+    user-drag: none;
+    -webkit-user-drag: none;
+    pointer-events: none; /* Prevents clicking and interacting */
+}
+
+/* Disable text selection */
+body, .paragraph, .title, .headers, .images figcaption {
+    user-select: none;
+}
+
+/* Prevent video interactions (like pausing, etc.) */
+video {
+    pointer-events: none; /* Prevent any clicks or interaction with videos */
+}
+
+/* Prevent right-click on the entire page */
+body {
+    -webkit-touch-callout: none; /* Disable iOS context menu */
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Disable the right-click context menu */
+.no-right-click {
+    -webkit-user-select: none; 
+    -ms-user-select: none;
+    user-select: none;
+}
