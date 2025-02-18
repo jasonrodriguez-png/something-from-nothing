@@ -1,0 +1,108 @@
+body {
+    background-color: rgb(0, 0, 0);
+    color: black;
+    position: relative;
+}
+
+.content-container {
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+.heatmap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 99%;
+    height: 2350%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.paragraph {
+    top: 0.625rem;  /* Converted from 10px */
+    left: 0.9375rem;  /* Converted from 15px */
+    font-size: 1.125rem;  /* Converted from 18px */
+    z-index: 10;
+    position: relative;
+}
+
+.title {
+    color: black;
+    font-family: sans-serif;
+    text-align: center;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    position: relative;
+    z-index: 10;
+}
+
+.headers {
+    color: black;
+    align-content: left;
+    font-size: 1.5rem;  /* Converted from 24px */
+    font-family: sans-serif;
+    font-weight: bolder;
+    z-index: 10;
+    padding-top: 3.125rem;  /* Converted from 5% */
+    position: relative;
+    z-index: 10;
+}
+
+.images {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    text-align: center; 
+    position: relative;
+    z-index: 10;
+}
+
+.images figure {
+    display: inline-block; /* Shrinks to fit the width of the image */
+    width: auto;
+    margin: 0; 
+    text-align: center; /* Center the caption below the image */
+}
+
+.images img {
+    max-width: 100%;  
+    height: auto;
+}
+
+.images figcaption {
+    display: block;  /* Make figcaption a block element */
+    width: 100%;  /* Ensures figcaption matches image width */
+    margin-top: 0.5rem;  /* Converted from 8px */
+    margin-bottom: 2rem;  /* Converted from 8px */
+    font-size: 0.9375rem;  /* Converted from 15px */
+    font-family: sans-serif;
+    text-align: center;  /* Center the text in the caption */
+    position: relative;
+    z-index: 10;
+  
+}
+
+/* Media Query for smaller screens like tablets or mobile */
+@media (max-width: 768px) {
+    .content-container {
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+    .heatmap {
+        height: 2700%;
+    }
+}
+
+ /* Reduce margins further for very small screens (mobile portrait) */
+ @media (max-width: 480px) {
+    .content-container {
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+    .heatmap {
+        height: 2700%;
+    }
+ }

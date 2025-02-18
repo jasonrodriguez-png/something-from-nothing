@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="heatmap.js"></script>
+</head>
+<body>
+    <div class="heatmap"></div>
+
+    <div class="container"> 
+        <video autoplay loop muted src="something-from-nothing-homescreen.mp4"></video>
+        <button id="ENTER">ENTER</button>
+    </div>
+
+    <div class="heatmap"></div>
+
+    <script>
+      var heatmapInstance = h337.create({
+        container: document.querySelector('.heatmap'),
+        radius: 100
+      });
+
+      // Variables for calculating mouse speed and frequency
+      let lastX = 0, lastY = 0, lastTime = Date.now();
+      let speed = 0;
+      let minSpeed = 0, maxSpeed = 20; // Speed range (adjust as needed)
+      let minFrequency = 0, maxFrequency = 300; // Frequency range (adjust as needed)
+
+      document.onmousemove = function(ev) {
+        const currentTime = Date.now();
+        const deltaX = ev.pageX - lastX;
+        const deltaY = ev.pageY - lastY;
+
+        // Calculate speed (distance / time)
+        const deltaTime = currentTime - lastTime;
+        const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        speed = distance / deltaTime; // Speed in pixels per millisecond
+
+        // Normalize speed to a value between 0 and 1
+        let speedValue = Math.min(1, Math.max(0, (speed - minSpeed) / (maxSpeed - minSpeed)));
+
+        // Calculate frequency (time between mousemove events)
+        const frequencyValue = Math.min(1, Math.max(0, (currentTime - lastTime) / maxFrequency));
+
+        // Combine speed and frequency to get a dynamic value for the heatmap
+        const dynamicValue = (speedValue + frequencyValue) / 2; // Average the two values
+
+        // Add dynamic data to the heatmap
+        heatmapInstance.addData({
+          x: ev.pageX,
+          y: ev.pageY,
+          value: dynamicValue
+        });
+
+        // Update last position and time
+        lastX = ev.pageX;
+        lastY = ev.pageY;
+        lastTime = currentTime;
+      };
+
+      // Add an event listener to the button
+      document.getElementById('ENTER').addEventListener('click', function() {
+        window.location.href = 'article.html'; // Replace with your desired link
+      });
+    </script>
+</body>
+</html>
