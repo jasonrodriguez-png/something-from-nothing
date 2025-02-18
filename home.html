@@ -65,6 +65,72 @@
       document.getElementById('ENTER').addEventListener('click', function() {
         window.location.href = 'article.html'; // Replace with your desired link
       });
+
+      // Touch event handler for mobile
+  document.addEventListener('touchmove', function(ev) {
+      if (ev.touches.length < 2) {
+          // If only one finger is used, let the user scroll normally
+          isTwoFingerSwipe = false;
+          return;
+      }
+
+      isTwoFingerSwipe = true;
+      const touch = ev.touches[0]; // Get the first touch point
+      const currentTime = Date.now();
+      const deltaX = touch.pageX - lastX;
+      const deltaY = touch.pageY - lastY;
+
+      // Calculate speed (distance / time)
+      const deltaTime = currentTime - lastTime;
+      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+      speed = distance / deltaTime; // Speed in pixels per millisecond
+
+      // Normalize speed to a value between 0 and 1
+      let speedValue = Math.min(1, Math.max(0, (speed - minSpeed) / (maxSpeed - minSpeed)));
+
+      // Calculate frequency (time between touchmove events)
+      const frequencyValue = Math.min(1, Math.max(0, (currentTime - lastTime) / maxFrequency));
+
+      // Combine speed and frequency to get a dynamic value for the heatmap
+      const dynamicValue = (speedValue + frequencyValue) / 2; // Average the two values
+
+      // Add dynamic data to the heatmap
+      heatmapInstance.addData({
+          x: touch.pageX,
+          y: touch.pageY,
+          value: dynamicValue
+      });
+
+      // Update last position and time
+      lastX = touch.pageX;
+      lastY = touch.pageY;
+      lastTime = currentTime;
+
+      // Prevent default behavior (like scrolling) when two-finger swipe is detected
+      ev.preventDefault();
+  }, { passive: false });  // Enable preventDefault to stop scrolling
+
+  // Optionally, handle touch start to initialize the first touch position
+  document.addEventListener('touchstart', function(ev) {
+      if (ev.touches.length < 2) {
+          isTwoFingerSwipe = false;
+      } else {
+          isTwoFingerSwipe = true;
+      }
+
+      const touch = ev.touches[0];
+      lastX = touch.pageX;
+      lastY = touch.pageY;
+      lastTime = Date.now();
+  });
+
+  // Optionally, handle touch end to reset when the touch ends
+  document.addEventListener('touchend', function() {
+      lastX = 0;
+      lastY = 0;
+      lastTime = Date.now();
+      isTwoFingerSwipe = false; // Reset after touch ends
+  });
     </script>
 </body>
 </html>
